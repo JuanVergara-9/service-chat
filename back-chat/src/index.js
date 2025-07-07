@@ -24,7 +24,7 @@ app.use(express.json());
 // Rutas
 const authRoutes = require("./routes/auth.routes");
 const chatRoutes = require("./routes/chat.routes");
-const messageRoutes = require("./routes/message.routes");
+const messageRoutes = require("./routes/messages.routes");
 const userRoutes = require("./routes/users.routes");
 
 app.use("/auth", authRoutes);
