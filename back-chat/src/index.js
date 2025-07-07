@@ -1,23 +1,44 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const { sequelize } = require("../models"); // o ajustar según la ubicación real
+const http = require("http");
+const { Server } = require("socket.io");
+const { sequelize } = require("../models");
+const chatSocket = require("./sockets/chatSocket");
 
-const authRoutes = require("./routes/auth.routes");
-
+// Crear app Express
 const app = express();
-const PORT = process.env.PORT || 4005;
+const server = http.createServer(app);
+
+// Instanciar socket.io y pasarle el servidor HTTP
+const io = new Server(server, {
+  cors: {
+    origin: "*"
+  }
+});
 
 // Middlewares
 app.use(cors());
 app.use(express.json());
 
 // Rutas
-app.use("/auth", authRoutes);
+const authRoutes = require("./routes/auth.routes");
+const chatRoutes = require("./routes/chat.routes");
+const messageRoutes = require("./routes/message.routes");
+const userRoutes = require("./routes/users.routes");
 
-// DB + Socket (si agregás más)
+app.use("/auth", authRoutes);
+app.use("/conversations", chatRoutes);
+app.use("/messages", messageRoutes);
+app.use("/users", userRoutes);
+
+// Iniciar WebSocket
+chatSocket(io);
+
+// Levantar servidor
+const PORT = process.env.PORT || 4005;
 sequelize.sync().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Chat-service corriendo en http://localhost:${PORT}`);
+  server.listen(PORT, () => {
+    console.log(`✅ Chat-service corriendo en http://localhost:${PORT}`);
   });
 });
