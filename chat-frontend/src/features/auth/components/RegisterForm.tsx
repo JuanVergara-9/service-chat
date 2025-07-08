@@ -1,5 +1,7 @@
+// src/features/auth/components/RegisterForm.tsx
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 interface RegisterFormValues {
   username: string;
@@ -24,46 +26,58 @@ export default function RegisterForm() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="max-w-md mx-auto mt-10 bg-white p-8 rounded-lg shadow-md space-y-6"
-    >
-      <h2 className="text-2xl font-bold text-center">Crear cuenta</h2>
-
-      <div>
-        <label className="block mb-1 font-medium">Nombre de usuario</label>
-        <input
-          {...register("username", { required: "Requerido" })}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>}
-      </div>
-
-      <div>
-        <label className="block mb-1 font-medium">Email</label>
-        <input
-          {...register("email", { required: "Requerido" })}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
-      </div>
-
-      <div>
-        <label className="block mb-1 font-medium">Contraseña</label>
-        <input
-          type="password"
-          {...register("password", { required: "Requerido" })}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
-      </div>
-
-      <button
-        type="submit"
-        className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+    <div className="min-h-screen flex items-center justify-center bg-amber-50 px-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg space-y-6 border border-amber-200"
       >
-        Registrarse
-      </button>
-    </form>
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-amber-700 mb-2">Crear cuenta</h2>
+          <p className="text-sm text-gray-500">Completá el formulario para registrarte</p>
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium text-sm">Nombre de usuario</label>
+          <input
+            {...register("username", { required: "Requerido" })}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400"
+          />
+          {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>}
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium text-sm">Email</label>
+          <input
+            {...register("email", { required: "Requerido" })}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400"
+          />
+          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium text-sm">Contraseña</label>
+          <input
+            type="password"
+            {...register("password", { required: "Requerido" })}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400"
+          />
+          {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+        >
+          Registrarse
+        </button>
+
+        <p className="text-sm text-center mt-4">
+          ¿Ya tenés una cuenta?{" "}
+          <Link to="/login" className="text-blue-600 hover:underline">
+            Iniciá sesión
+          </Link>
+        </p>
+      </form>
+    </div>
   );
 }
