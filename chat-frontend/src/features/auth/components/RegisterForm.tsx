@@ -1,4 +1,3 @@
-// src/features/auth/components/RegisterForm.tsx
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../../context/AuthContext";
 import { Link } from "react-router-dom";
@@ -26,54 +25,75 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-amber-50 px-4">
+    <div className="min-h-screen w-full flex items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg space-y-6 border border-amber-200"
+        className="bg-white text-gray-900 p-10"
       >
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-amber-700 mb-2">Crear cuenta</h2>
-          <p className="text-sm text-gray-500">Completá el formulario para registrarte</p>
+        <div className="text-center space-y-2 ">
+          <h2 className="text-3xl font-bold text-amber-700 font-serif">
+            Crear cuenta
+          </h2>
+          <p className="text-sm text-gray-500">
+            Completá el formulario para registrarte
+          </p>
         </div>
 
-        <div>
-          <label className="block mb-1 font-medium text-sm">Nombre de usuario</label>
+        {/* Nombre de usuario */}
+        <div className="relative pb-[20px]">
           <input
-            {...register("username", { required: "Requerido" })}
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400"
+            {...register("username", { required: "Nombre requerido" })}
+            placeholder="Nombre de usuario"
+            className="w-full h-[23px] pl-11 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400"
           />
-          {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>}
+          {errors.username && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.username.message}
+            </p>
+          )}
         </div>
 
-        <div>
-          <label className="block mb-1 font-medium text-sm">Email</label>
+        {/* Email */}
+        <div className="relative pb-[20px]">
           <input
-            {...register("email", { required: "Requerido" })}
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400"
+            {...register("email", { required: "Email requerido" })}
+            placeholder="Correo electrónico"
+            className="w-full h-[23px] pl-11 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400"
           />
-          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.email.message}
+            </p>
+          )}
         </div>
 
-        <div>
-          <label className="block mb-1 font-medium text-sm">Contraseña</label>
+        {/* Contraseña */}
+        <div className="relative pb-[20px]">
           <input
             type="password"
-            {...register("password", { required: "Requerido" })}
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400"
+            {...register("password", { required: "Contraseña requerida" })}
+            placeholder="Contraseña"
+            className="w-full h-[23px] pl-11 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400"
           />
-          {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
+          {errors.password && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.password.message}
+            </p>
+          )}
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
-        >
-          Registrarse
-        </button>
+        <div className="pt-2">
+          <button
+            type="submit"
+            className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition font-semibold"
+          >
+            Registrarse
+          </button>
+        </div>
 
-        <p className="text-sm text-center mt-4">
+        <p className="text-sm text-center pt-2 text-gray-600">
           ¿Ya tenés una cuenta?{" "}
-          <Link to="/login" className="text-blue-600 hover:underline">
+          <Link to="/login" className="text-blue-600 hover:underline font-medium">
             Iniciá sesión
           </Link>
         </p>
