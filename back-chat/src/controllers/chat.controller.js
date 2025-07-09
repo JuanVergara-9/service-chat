@@ -1,4 +1,5 @@
 const chatService = require("../services/chat.service");
+const { Op } = require("sequelize");
 
 const getMyConversations = async (req, res) => {
   try {
@@ -6,6 +7,29 @@ const getMyConversations = async (req, res) => {
     res.json(conversations);
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+const getConversationWithUser = async (req, res) => {
+  const userId = req.user.id; // quien hace la request
+  const otherUserId = parseInt(req.params.userId);
+
+  try {
+    const messages = await Message.findAll({
+      where: {
+        // Mensajes entre ambos usuarios (ida y vuelta)
+        [Op.or]: [
+          { senderId: userId, receiverId: otherUserId },
+          { senderId: otherUserId, receiverId: userId },
+        ]
+      },
+      order: [["createdAt", "ASC"]],
+    });
+
+    res.json(messages);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error al obtener la conversación" });
   }
 };
 
@@ -27,5 +51,6 @@ const createOrGetConversation = async (req, res) => {
 
 module.exports = {
   getMyConversations,
+  getConversationWithUser,
   createOrGetConversation
 };
