@@ -1,5 +1,16 @@
 const { User } = require("../../models");
 
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.findAll({
+      attributes: ["id", "name", "email"] // evitá incluir password
+    });
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: "Error al obtener usuarios" });
+  }
+};
+
 const getMe = async (req, res) => {
   const user = await User.findByPk(req.user.userId, {
     attributes: ["id", "name", "email"]
@@ -18,6 +29,7 @@ const getUserById = async (req, res) => {
 };
 
 module.exports = {
+  getAllUsers,
   getMe,
   getUserById
 };

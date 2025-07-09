@@ -1,15 +1,18 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../../context/AuthContext";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 interface RegisterFormValues {
-  username: string;
+  name: string;
   email: string;
   password: string;
 }
 
 export default function RegisterForm() {
   const { register: registerUser } = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,7 +21,8 @@ export default function RegisterForm() {
 
   const onSubmit = async (data: RegisterFormValues) => {
     try {
-      await registerUser(data.username, data.email, data.password);
+      await registerUser(data.name, data.email, data.password);
+      navigate("/");
     } catch (err) {
       alert("Error en el registro");
     }
@@ -42,13 +46,13 @@ export default function RegisterForm() {
         {/* Nombre de usuario */}
         <div className="relative pb-[20px]">
           <input
-            {...register("username", { required: "Nombre requerido" })}
+            {...register("name", { required: "Nombre requerido" })}
             placeholder="Nombre de usuario"
             className="w-full h-[23px] pl-11 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400"
           />
-          {errors.username && (
+          {errors.name && (
             <p className="text-red-500 text-sm mt-1">
-              {errors.username.message}
+              {errors.name.message}
             </p>
           )}
         </div>

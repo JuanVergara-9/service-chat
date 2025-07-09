@@ -5,6 +5,7 @@ const authenticate = require("../middlewares/auth.middleware");
 
 router.use(authenticate);
 
+router.get("/", userController.getAllUsers);
 router.get("/me", userController.getMe);
 router.get("/:id", userController.getUserById);
 

@@ -7,12 +7,12 @@ export async function login(email: string, password: string): Promise<AuthRespon
   return res.data;
 }
 
-export async function register(username: string, email: string, password: string): Promise<AuthResponse> {
-  const res = await apiClient.post("/auth/register", { username, email, password });
+export async function register(name: string, email: string, password: string): Promise<AuthResponse> {
+  const res = await apiClient.post("/auth/register", { name, email, password });
   return res.data;
 }
 
 export async function getProfile(): Promise<{ user: AuthResponse["user"] }> {
-  const res = await apiClient.get("/auth/profile");
+  const res = await apiClient.get("/auth/me");
   return res.data;
 }

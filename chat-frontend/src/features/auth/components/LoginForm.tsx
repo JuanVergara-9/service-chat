@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../../context/AuthContext";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface LoginFormValues {
   email: string;
@@ -9,6 +10,7 @@ interface LoginFormValues {
 
 export default function LoginForm() {
   const { login } = useAuth();
+  const navigate = useNavigate(); // Mover aquí
   const {
     register,
     handleSubmit,
@@ -18,6 +20,7 @@ export default function LoginForm() {
   const onSubmit = async (data: LoginFormValues) => {
     try {
       await login(data.email, data.password);
+      navigate("/"); // Navegar después de iniciar sesión
     } catch (err) {
       alert("Credenciales inválidas");
     }
